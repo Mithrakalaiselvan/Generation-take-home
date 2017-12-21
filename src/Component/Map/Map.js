@@ -9,38 +9,29 @@ var divStyle = {
   padding: 20
 };
 
-const Listing = ({places}) => {
+// On clicking the store from the map my favourite list get updated
+  
+const Favourites = ({places}) => {
+
+  //Will eliminate the duplicate values
+
+  const uniquePlaces = Array.from(new Set(places));
+  if (!uniquePlaces.length) {
+      return <div>None</div>
+  }
   return (
-    <ul>
-      {places && places.map(p => {
-        return (
-          <li key={p.id}>
-            {p.name}
-          </li>
-        )
-      })}
-    </ul>
+        <ul>
+          {uniquePlaces && uniquePlaces.map(p => {
+            return (
+              <li>{p}</li>
+            )
+          })}
+        </ul>
   )
 }
 
-const Favourites = ({places}) => {
-  if (!places.length) {
-      return <div style={{width: '50%', height: '50%', position: 'relative'}}>None</div>
-  }
-  console.log("places",places);
-  return (
-    <ul>
-      {places && places.map(p => {
-        return (
-          <li>
-            {p}
-          </li>
-        )
-      })}
-    </ul>
-  )
-}
- 
+// Conatiner to show the mexico city map
+
 export class MapContainer extends Component {
 constructor(props, context) {
     super(props, context);
@@ -68,18 +59,21 @@ onMarkerClick(props, marker, e) {
     })
 }
 
+// This fn will get the nearby stores using googleAPI
+
 searchNearby(map, center) {
     const {google} = this.props;
     const service = new google.maps.places.PlacesService(map);
+
     // Specify location, radius and place types for your Places API search.
+
     const request = {
        location: center,
        radius: '500',
-       type: ['stops']
+       type: ['stores']
      };
 
     service.nearbySearch(request, (results, status, pagination) => {
-      console.log('results',results)
       if (status == google.maps.places.PlacesServiceStatus.OK) {
 
         this.pagination = pagination;
@@ -93,6 +87,9 @@ searchNearby(map, center) {
   }
 
 render() {
+
+   // If the map is not loaded yet
+
    if (!this.props.loaded) {
       return <div>Loading...</div>
     }
@@ -104,9 +101,8 @@ render() {
             lng: -99.126457
             }}
             onReady={this.onReady.bind(this)}
-            style={{width: '50%', height: '50%', position: 'relative'}}>
+            style={{width: '100%', height: '70%', position: 'relative'}}>
 
-        {/* <Listing places={this.state.places} style={{width: '25%', height: '25%', position: 'relative','text-align':'right'}}/> */}
 
         <div>
           <h3>My Favourite Stores</h3>
