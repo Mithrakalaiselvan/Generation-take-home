@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import YourComponent from './YourComponent';
+import MapContainer from  './Component/Map/Map'; 
 
 export default class App extends Component {
   render() {
@@ -34,7 +35,7 @@ export default class App extends Component {
 		  	<li><i>That said, code that is easy to follow is always appreciated :)</i></li>
 		  </ul>
 
-		  <YourComponent/>
+		  <MapContainer/>
       </div>
     );
   }
