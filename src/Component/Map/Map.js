@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom'
-import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
+// import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
+
+import Map, {GoogleApiWrapper} from '../../helpers/index';
+import Marker from '../../helpers/components/Marker';
+import InfoWindow from '../../helpers/components/InfoWindow';
 
 var divStyle = {
   border: 'red',
